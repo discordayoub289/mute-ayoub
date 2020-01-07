@@ -4,13 +4,10 @@ const ms = require("ms");
 module.exports = async (client, options) => {
     const muteMessage = (options && options.muteMessage) || "was muted since we don't like too much advertisement type people!";
     const mutedRole = (options && options.mutedRole) || "muted";
-    const timeMuted = ms((options && options.timeMuted)) || 1000 *60*60;
-    const logChannel = (options && options.logChannel) || "mute-logs";
     const mprefix = (options && options.mprefix) || "#";
     const mutecmd = (options && options.mutecmd) || "mute";
     if(!isNaN(muteMessage) || muteMessage.length < 5) throw new Error("ERROR: <muteMessage> option must be a string and have at least 5 characters long (Including space).");
     if(!isNaN(mutecmd)) throw new Error("ERROR: <muteMessage> option must be a string.");
-    if(isNaN(timeMuted)) throw new Error("ERROR: <timeMuted> option is not set up right! Please check it again to be a number in settings.");
     client.on("checkMessage", async (m) => {
         let clock = new Date();
         let ss = String(clock.getSeconds()).padStart(2, '0');
@@ -33,20 +30,7 @@ module.exports = async (client, options) => {
         if(m.content.startsWith(mprefix+mutecmd)) {
             let user = m.mentions.users.first() || m.guild.members.get(m.content.split(" ").slice(1))
             let re = m.content.split(" ").slice(3).join(" ")
-            let ReportChannel = m.guild.channels.find(ch => ch.name === logChannel);
-            if(!ReportChannel){
-                try{
-                    ReportChannel = await m.guild.createChannel('mute-logs', {
-                        type: 'text',
-                        permissionOverwrites:[{
-                            id: m.guild.id,
-                            deny: ['VIEW_CHANNEL']
-                        }]
-                    }).then(m=> m.send(`Created **\`Mute-Logs\`** channel.`)).catch(console.error)
-                }catch(e){
-                    console.log(e.stack);
-                }
-            };
+            let time = m.content.split(" ").slice(2).join(" ")
             let role = m.guild.roles.find(namae => namae.name === mutedRole);      
             if (!role) {
                 try {
@@ -74,20 +58,14 @@ module.exports = async (client, options) => {
                     let muteEmbed = new RichEmbed()
                     .setAuthor(' Action | Mute')
                     .addField('Member muted:',`${user}`)
-                    .addField(`How much time got muted?:`,`${ms(timeMuted)}.`)
+                    .addField(`How much time got muted?:`,`${time}.`)
                     .addField('Reason of mute: ', `${re?re:"no reason"}`)
                     .addField(`When it was muted that person:`,TheDate+ " at "+ clock+" "+amORpm)
                     .setColor('#D9D900')
-                    ReportChannel.send(muteEmbed);
+                    m.channel.send(muteEmbed);
                     setTimeout(()=>{
                         user.removeRole(role);
-                        let unmutedEmbed = new RichEmbed()
-                        .setAuthor('Action | Unmute')
-                        .addField(`Member unmuted:`,`${user}`)
-                        .addField(`Reason of unmute:`,`Time Expired (${ms(timeMuted)})`)
-                        .setColor('#D9D900')
-                        ReportChannel.send(unmutedEmbed)
-                    }, timeMuted);
+                    }, ms(time));
                     return true;
                 }).catch((e) => {
                     m.guild.owner.send(`Oops, seems like i don't have sufficient permissions to mute <@!${user.id}>!*`);

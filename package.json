@@ -1,0 +1,29 @@
+{
+  "name": "ayoub-steve",
+  "version": "1.0.0",
+  "description": "to mute annoying people.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/discordayoub289/ayoub-steveb.git"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "discord-mute",
+    "mute"
+  ],
+  "author": "Ayoub Toxic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/discordayoub289/ayoub-steve/issues"
+  },
+  "homepage": "https://github.com/discordayoub289/ayoub-steve#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "ms": "^2.1.2"
+  }
+}
