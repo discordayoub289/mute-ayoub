@@ -1,20 +1,20 @@
 {
   "name": "ayoub-steve",
   "version": "1.0.0",
-  "description": "to mute annoying people.",
+  "description": "A sipmle module helps you to mute annoying people.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/discordayoub289/ayoub-steveb.git"
+    "url": "git+https://github.com/discordayoub289/ayoub-steve.git"
   },
   "keywords": [
-    "discord",
     "discord.js",
-    "discord-mute",
-    "mute"
+    "discord",
+    "mute-command",
+    "discord-mute"
   ],
   "author": "Ayoub Toxic",
   "license": "ISC",

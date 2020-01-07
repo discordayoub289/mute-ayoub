@@ -6,7 +6,7 @@ A simple module based on MirageZoe's module: better-discord-antispam.js! While c
 ## How to add this to your node_modules:
 To install this module type in your console command below:
 ```
-npm i "ayoub-steve
+npm i ayoub-steve
 ```
 
 ## An example of how to set up:
